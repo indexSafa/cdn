@@ -6,7 +6,7 @@ import json
 # 1. Pobieramy Twoją listę kanałów, aby wiedzieć, dla jakich stacji szukać programu
 print("Pobieranie channels.json...")
 try:
-    req = requests.get("https://tv.szafqu.us/channels.json", headers={'User-Agent': 'Mozilla/5.0'})
+    req = requests.get("https://corsproxy.io/?url=https://tv.szafqu.us/channels.json", headers={'User-Agent': 'Mozilla/5.0'})
     channels_data = req.json()
     my_channels = [ch['name'].lower().strip() for ch in channels_data]
 except Exception as e:

@@ -3,14 +3,35 @@ import gzip
 import xml.etree.ElementTree as ET
 import json
 
-# 1. Pobieramy Twoją listę kanałów, aby wiedzieć, dla jakich stacji szukać programu
+# 1. Pobieramy Twoją listę kanałów
 print("Pobieranie channels.json...")
 try:
-    req = requests.get("https://corsproxy.io/?url=https://tv.szafqu.us/channels.json", headers={'User-Agent': 'Mozilla/5.0'})
+    # USUNIĘTO corsproxy.io - Python nie potrzebuje omijania CORS
+    url = "https://tv.szafqu.us/channels.json"
+    req = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
+    req.raise_for_status() # Sprawdza, czy zapytanie się powiodło (kod 200)
     channels_data = req.json()
-    my_channels = [ch['name'].lower().strip() for ch in channels_data]
+    
+    my_channels = []
+    # Bezpieczne parsowanie: sprawdzamy, z jaką strukturą JSON mamy do czynienia
+    if isinstance(channels_data, list):
+        for ch in channels_data:
+            if isinstance(ch, dict) and 'name' in ch:
+                my_channels.append(ch['name'].lower().strip())
+            elif isinstance(ch, str): # Gdyby plik był po prostu listą nazw
+                my_channels.append(ch.lower().strip())
+    elif isinstance(channels_data, dict):
+        print("Uwaga: JSON zwrócił słownik. Przeszukuję zawartość...")
+        if 'channels' in channels_data and isinstance(channels_data['channels'], list):
+            for ch in channels_data['channels']:
+                if isinstance(ch, dict) and 'name' in ch:
+                    my_channels.append(ch['name'].lower().strip())
+
+    if not my_channels:
+        print("Ostrzeżenie: Nie udało się wczytać żadnych kanałów z pliku channels.json!")
+
 except Exception as e:
-    print(f"Błąd pobierania channels.json: {e}")
+    print(f"Błąd pobierania lub przetwarzania channels.json: {e}")
     my_channels = []
 
 # 2. Pobieramy plik EPG z epg.ovh (wersja .gz)
@@ -24,40 +45,25 @@ root = ET.fromstring(xml_data)
 
 # 3. Dopasowujemy ID kanałów
 alias_map = {
-    "canal+ sport 1": "canal+ sport"  # Wpisz dokładnie nazwę, która jest w XML (często epg.ovh używa "canal+ sport")
+    "canal+ sport 1": "canal+ sport"
 }
 
+# Usunięto zduplikowany blok kodu - iterujemy po kanałach tylko raz
 channel_map = {}
 for channel in root.findall('channel'):
     ch_id = channel.get('id')
     for display_name in channel.findall('display-name'):
-        name_xml = display_name.text.strip().lower()
-        
-        for my_name in my_channels:
-            # Sprawdzenie bezpośrednie LUB sprawdzenie przez alias
-            if name_xml == my_name or name_xml == alias_map.get(my_name):
-                channel_map[ch_id] = my_name
-                break
+        if display_name.text:
+            name_xml = display_name.text.strip().lower()
+            
+            for my_name in my_channels:
+                # Sprawdzenie bezpośrednie LUB sprawdzenie przez alias
+                if name_xml == my_name or name_xml == alias_map.get(my_name):
+                    channel_map[ch_id] = my_name
+                    break
 
-channel_map = {}
-for channel in root.findall('channel'):
-    ch_id = channel.get('id')
-    for display_name in channel.findall('display-name'):
-        name_xml = display_name.text.strip().lower()
-        
-        # Logika: sprawdzamy czy nazwa jest w naszych kanałach
-        # LUB czy jest w naszym alias_map
-        for my_name in my_channels:
-            # Sprawdzenie bezpośrednie
-            if name_xml == my_name:
-                channel_map[ch_id] = my_name
-            # Sprawdzenie przez alias
-            elif alias_map.get(my_name) == name_xml:
-                channel_map[ch_id] = my_name
-
-# 4. Funkcja do konwersji dziwnego czasu XMLTV na standardowy format dla JavaScript
+# 4. Funkcja do konwersji dziwnego czasu XMLTV
 def parse_xmltv_time(t):
-    # Wejście: 20240510123000 +0200
     if not t or len(t) < 14: return None
     Y, M, D = t[0:4], t[4:6], t[6:8]
     h, m, s = t[8:10], t[10:12], t[12:14]

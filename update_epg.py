@@ -6,22 +6,29 @@ import json
 # 1. Pobieramy Twoją listę kanałów
 print("Pobieranie channels.json...")
 try:
-    # USUNIĘTO corsproxy.io - Python nie potrzebuje omijania CORS
     url = "https://tv.szafqu.us/channels.json"
-    req = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
+    
+    # Rozbudowane nagłówki, aby udawać prawdziwą przeglądarkę (Chrome na Windowsie)
+    custom_headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+        'Accept': 'application/json, text/javascript, */*; q=0.01',
+        'Accept-Language': 'pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7',
+        'Referer': 'https://tv.szafqu.us/',
+        'Connection': 'keep-alive'
+    }
+    
+    req = requests.get(url, headers=custom_headers, timeout=10)
     req.raise_for_status() # Sprawdza, czy zapytanie się powiodło (kod 200)
     channels_data = req.json()
     
     my_channels = []
-    # Bezpieczne parsowanie: sprawdzamy, z jaką strukturą JSON mamy do czynienia
     if isinstance(channels_data, list):
         for ch in channels_data:
             if isinstance(ch, dict) and 'name' in ch:
                 my_channels.append(ch['name'].lower().strip())
-            elif isinstance(ch, str): # Gdyby plik był po prostu listą nazw
+            elif isinstance(ch, str):
                 my_channels.append(ch.lower().strip())
     elif isinstance(channels_data, dict):
-        print("Uwaga: JSON zwrócił słownik. Przeszukuję zawartość...")
         if 'channels' in channels_data and isinstance(channels_data['channels'], list):
             for ch in channels_data['channels']:
                 if isinstance(ch, dict) and 'name' in ch:
@@ -29,7 +36,14 @@ try:
 
     if not my_channels:
         print("Ostrzeżenie: Nie udało się wczytać żadnych kanałów z pliku channels.json!")
+    else:
+        print(f"Pobrano {len(my_channels)} kanałów z Twojej listy.")
 
+except requests.exceptions.HTTPError as http_err:
+    print(f"Błąd HTTP: {http_err}")
+    if req.status_code == 403:
+        print("--> Serwer nadal blokuje dostęp (Ochrona anty-botowa / Cloudflare).")
+    my_channels = []
 except Exception as e:
     print(f"Błąd pobierania lub przetwarzania channels.json: {e}")
     my_channels = []

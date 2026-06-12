@@ -1,0 +1,384 @@
+[
+  {
+    "name": "Eleven Sports 1",
+    "icon": "stacje/es1.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/eleven-sports-1.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=eleven_sports1" }
+    ]
+  },
+  {
+    "name": "Eleven Sports 2",
+    "icon": "stacje/es2.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/eleven-sports-2.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=eleven_sports2" }
+    ]
+  },
+  {
+    "name": "Eleven Sports 3",
+    "icon": "stacje/es3.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/eleven-sports-3.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=eleven_sports3" }
+    ]
+  },
+  {
+    "name": "Eleven Sports 4",
+    "icon": "stacje/es4.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/eleven-sports-4.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=eleven_sports4" }
+    ]
+  },
+  {
+    "name": "Canal+ Sport 1",
+    "icon": "stacje/cps1.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/canal-sport-1.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=canal_sport1" }
+    ]
+  },
+  {
+    "name": "Canal+ Sport 2",
+    "icon": "stacje/cps2.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/canal-sport-2.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=canal_sport2" }
+    ]
+  },
+  {
+    "name": "Canal+ Sport 3",
+    "icon": "stacje/cps3.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/canal-sport-3.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=canal_sport3" }
+    ]
+  },
+  {
+    "name": "Canal+ Sport 4",
+    "icon": "stacje/cps4.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/canal-sport-4.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=canal_sport4" }
+    ]
+  },
+  {
+    "name": "Canal+ Sport 5",
+    "icon": "stacje/cps5.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/canal-sport-5.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=canal_sport5" }
+    ]
+  },
+  {
+    "name": "Canal+ 360",
+    "icon": "stacje/cp360.png",
+    "sources": [
+      { "name": "StreamVault", "type": "m3u8", "url": "https://autochem.shinexcarcare.co.uk/stream/canal-360.m3u8" },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=canal_plus_360" }
+    ]
+  },
+  {
+    "name": "Canal+ Extra 1",
+    "icon": "stacje/cpe1.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/canal-extra-1.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=canal_plus_extra1_" }
+    ]
+  },
+  {
+    "name": "Canal+ Extra 2",
+    "icon": "stacje/cpe2.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/canal-extra-2.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=canal_plus_extra2" }
+    ]
+  },
+  {
+    "name": "Canal+ Extra 3",
+    "icon": "stacje/cpe3.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/canal-extra-3.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=canal_plus_extra3" }
+    ]
+  },
+  {
+    "name": "Canal+ Extra 4",
+    "icon": "stacje/cpe4.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/canal-extra-4.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=canal_plus_extra4" }
+    ]
+  },
+  {
+    "name": "Canal+ Extra 5",
+    "icon": "stacje/cpe5.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/canal-extra-5.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=canal_plus_extra5" }
+    ]
+  },
+  {
+    "name": "Canal+ Extra 6",
+    "icon": "stacje/cpe6.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/canal-extra-6.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=canal_plus_extra6" }
+    ]
+  },
+  {
+    "name": "Canal+ Extra 7",
+    "icon": "stacje/cpe7.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/canal-extra-7.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=canal_plus_extra7" }
+    ]
+  },
+  {
+    "name": "Eurosport 1",
+    "icon": "stacje/e1.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/eurosport-1.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=eurosport1" }      
+    ]
+  },
+  {
+    "name": "Eurosport 2",
+    "icon": "stacje/e2.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/eurosport-2.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=eurosport2" }      
+    ]
+  },
+  {
+    "name": "Eurosport 3",
+    "icon": "stacje/e3.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/eurosport-3.m3u8"
+      },      
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=eurosport3" }
+    ]
+  },
+  {
+    "name": "Eurosport 4",
+    "icon": "stacje/e4.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/eurosport-4.m3u8"
+      },      
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=eurosport4" }
+    ]
+  },  
+  {
+    "name": "Polsat Sport 1",
+    "icon": "stacje/ps1.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/polsat-sport-1.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=polsat_sport1" }
+    ]
+  },
+  {
+    "name": "Polsat Sport 2",
+    "icon": "stacje/ps2.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/polsat-sport-2.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=polsat_sport2" }
+    ]
+  },
+  {
+    "name": "Polsat Sport 3",
+    "icon": "stacje/ps3.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/polsat-sport-3.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=polsat_sport3" }
+    ]
+  },
+  {
+    "name": "Polsat Sport Extra 1",
+    "icon": "stacje/pse1.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/polsat-sport-extra-1.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=polsat_sport_e1" }
+    ]
+  },
+  {
+    "name": "Polsat Sport Extra 2",
+    "icon": "stacje/pse2.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/polsat-sport-extra-2.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=polsat_sport_e2" }
+    ]
+  },
+  {
+    "name": "Polsat Sport Extra 3",
+    "icon": "stacje/pse3.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/polsat-sport-extra-3.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=polsat_sport_e3" }
+    ]
+  },
+  {
+    "name": "Polsat Sport Extra 4",
+    "icon": "stacje/pse4.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/polsat-sport-extra-4.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=polsat_sport_e4" }
+    ]
+  },
+  {
+    "name": "Polsat Sport Premium 1",
+    "icon": "stacje/psp1.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/polsat-sport-premium-1.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=polsat_sport_premium_1_x" }
+    ]
+  },
+  {
+    "name": "Polsat Sport Premium 2",
+    "icon": "stacje/psp2.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/polsat-sport-premium-2.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=polsat_sport_premium_2" }
+    ]
+  },
+  {
+    "name": "Polsat Sport Fight",
+    "icon": "stacje/psf.png",
+    "sources": [
+      {
+        "name": "StreamVault",
+        "type": "m3u8",
+        "url": "https://autochem.shinexcarcare.co.uk/stream/polsat-sport-fight.m3u8"
+      },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=polsat_sport_fight" }
+    ]
+  },
+  {
+    "name": "TVP Sport",
+    "icon": "stacje/tvps.png",
+    "sources": [
+      {
+        "name": "Główny",
+        "type": "m3u8",
+        "url": "https://vizja.ct8.pl/stream/embed/weeb.php/id=tvpsport/"
+      },
+      { "name": "nej.cz", "type": "m3u8", "url": "https://estreams.tv.nej.cz/dash/CH_TVP_SPORT.ism/playlist.mpd" },
+      { "name": "strumyk", "type": "embed", "url": "https://videocdn-4726.website/shopping/?channel_id=tvpsport" },
+      { "name": "vizja", "type": "embed", "url": "https://vizja.ct8.pl/tv/id=tvpsport/" }        
+    ]
+  }
+]

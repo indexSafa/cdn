@@ -348,7 +348,7 @@
 
             try {
                 const [channelsRes, epgRes] = await Promise.all([
-                    fetch('C:\Users\edeko\Documents\GitHub\tv\channels.json'),
+                    fetch('channels.json'),
                     fetch('https://cdn.szafqu.us/epg_data.json').catch(() => null)
                 ]);
 

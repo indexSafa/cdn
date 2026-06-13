@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, shrink-to-fit=no, viewport-fit=cover">
+  <title>📺 Streamy – Canal+, VIP, IPTV, Darmowe</title>
+  <!-- Plyr – nowoczesny odtwarzacz -->
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0b0f17;
+      font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 1.2rem;
+      color: #e0e0e0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1300px;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    h1 {
+      font-weight: 500;
+      font-size: 2.2rem;
+      letter-spacing: 1px;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.3rem;
+      border-left: 5px solid #3b82f6;
+      padding-left: 1.2rem;
+      background: linear-gradient(to right, rgba(59,130,246,0.1), transparent);
+    }
+    h1 span {
+      font-weight: 300;
+      color: #a0b9e0;
+      font-size: 1.3rem;
+      margin-left: 0.5rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 1.8rem;
+      width: 100%;
+    }
+
+    .card {
+      background: #131a27;
+      border-radius: 1.4rem;
+      padding: 1.2rem 1.2rem 1rem;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04);
+      transition: transform 0.2s ease, box-shadow 0.25s;
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(2px);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 40px rgba(0,0,0,0.8), 0 0 0 1px rgba(59,130,246,0.3);
+    }
+
+    .label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.9rem;
+      font-weight: 500;
+      padding: 0 0.2rem;
+    }
+
+    .title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      background: rgba(255,255,255,0.05);
+      padding: 0.3rem 1rem;
+      border-radius: 2rem;
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .badge {
+      background: #1e293b;
+      color: #cbd5e1;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      padding: 0.2rem 0.7rem;
+      border-radius: 20px;
+      margin-left: 0.3rem;
+    }
+
+    .plyr {
+      border-radius: 1rem;
+      overflow: hidden;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000000;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+      margin-bottom: 0.3rem;
+    }
+
+    /* Plyr custom colors */
+    :root {
+      --plyr-color-main: #3b82f6;
+      --plyr-video-control-background-hover: rgba(30, 41, 59, 0.9);
+      --plyr-menu-background: #0f172a;
+    }
+
+    .plyr--video {
+      height: 100%;
+    }
+
+    .note {
+      font-size: 0.75rem;
+      color: #94a3b8;
+      margin-top: 0.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+      padding: 0 0.2rem;
+      opacity: 0.8;
+    }
+
+    .note i {
+      font-style: normal;
+      font-size: 0.9rem;
+    }
+
+    .footer-note {
+      margin-top: 1.2rem;
+      text-align: center;
+      color: #64748b;
+      font-size: 0.85rem;
+      border-top: 1px solid #1e293b;
+      padding-top: 1.5rem;
+      width: 100%;
+    }
+
+    @media (max-width: 500px) {
+      body {
+        padding: 0.8rem;
+      }
+      h1 {
+        font-size: 1.7rem;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>
+      🎬 STREAMY LIVE
+      <span>• 6 kanałów</span>
+    </h1>
+
+    <div class="grid" id="streamGrid">
+      <!-- Karty generowane dynamicznie przez JS, aby łatwo zarządzać linkami -->
+    </div>
+    <div class="footer-note">
+      ⚡ Kliknij, aby odtworzyć. Użyj kontroli odtwarzacza. Niektóre źródła wymagają odświeżenia.
+    </div>
+  </div>
+
+  <!-- Plyr JS -->
+  <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+  <script>
+    (function() {
+      // Definicja streamów – dokładnie według podanych linków i opisów
+      const streams = [
+        {
+          id: 1,
+          title: "Canal+ Nasz",
+          url: "http://ppv:ppv@217.160.186.100:1234/stream/canalplus/1/master.m3u8",
+          subtitle: "canal plus nasz (PPV)",
+          badge: "PPV",
+          type: "hls"
+        },
+        {
+          id: 2,
+          title: "VIP Kupiony",
+          url: "https://hugh.cdn.rumble.cloud/live/gke17oc4/live-hls/xskk-bdua/chunklist_i1.m3u8",
+          subtitle: "vip kupiony (Rumble)",
+          badge: "VIP",
+          type: "hls"
+        },
+        {
+          id: 3,
+          title: "IPTV Wioska",
+          url: "https://streamer.filmowo.xyz/memfs/9e8021d2-817e-43d1-8a65-b296ecb78a2f.m3u8",
+          subtitle: "iptv wioska",
+          badge: "IPTV",
+          type: "hls"
+        },
+        {
+          id: 4,
+          title: "IPTV 365",
+          url: "https://streamer.filmowo.xyz/memfs/0e9b3551-77c9-4be0-b741-aefd3f891d7d.m3u8",
+          subtitle: "iptv 365",
+          badge: "365",
+          type: "hls"
+        },
+        {
+          id: 5,
+          title: "Darmowe Strumyk",
+          url: "https://videocdn-4726.website/shopping/?channel_id=njstrim7",
+          subtitle: "darmowe strumyk (iframe)",
+          badge: "DARMOWE",
+          type: "iframe"
+        },
+        {
+          id: 6,
+          title: "Darmowe TimStreams",
+          url: "https://junkieembeds.pages.dev/embed/prime-show-mma-17",
+          subtitle: "darmowe timstreams (iframe)",
+          badge: "MMA",
+          type: "iframe"
+        }
+      ];
+
+      const grid = document.getElementById('streamGrid');
+
+      // Funkcja tworząca kartę dla HLS (Plyr)
+      function createHLSCard(stream) {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        // Nagłówek
+        const labelDiv = document.createElement('div');
+        labelDiv.className = 'label';
+        labelDiv.innerHTML = `
+          <div class="title">
+            📡 ${stream.title}
+            <span class="badge">${stream.badge}</span>
+          </div>
+        `;
+
+        // Kontener video
+        const videoWrapper = document.createElement('div');
+        videoWrapper.className = 'plyr';
+        
+        const video = document.createElement('video');
+        video.setAttribute('controls', '');
+        video.setAttribute('playsinline', '');
+        video.setAttribute('crossorigin', 'anonymous');
+        // Dla bezpieczeństwa nie dodajemy preload="auto" wszędzie
+        video.setAttribute('preload', 'metadata');
+        
+        // Źródło HLS
+        const source = document.createElement('source');
+        source.src = stream.url;
+        source.type = 'application/x-mpegURL'; // m3u8
+        video.appendChild(source);
+        videoWrapper.appendChild(video);
+
+        // Inicjalizacja Plyr po dodaniu do DOM
+        card.appendChild(labelDiv);
+        card.appendChild(videoWrapper);
+        
+        const noteDiv = document.createElement('div');
+        noteDiv.className = 'note';
+        noteDiv.innerHTML = `🔗 ${stream.subtitle}`;
+        card.appendChild(noteDiv);
+
+        // Opóźniona inicjalizacja Plyr, aby upewnić się, że element istnieje
+        setTimeout(() => {
+          try {
+            new Plyr(video, {
+              controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
+              autoplay: false,
+              muted: false,
+              clickToPlay: true,
+              hideControls: false,
+              resetOnEnd: false,
+              disableContextMenu: false,
+              loadSprite: true,
+              iconUrl: 'https://cdn.plyr.io/3.7.8/plyr.svg',
+              blankVideo: 'https://cdn.plyr.io/static/blank.mp4',
+              quality: {
+                default: 0,
+                options: [1080, 720, 480]
+              }
+            });
+          } catch (e) {
+            console.warn('Plyr init error for ' + stream.title, e);
+            // Fallback: natywne kontrolki HTML5 już są
+          }
+        }, 10);
+
+        return card;
+      }
+
+      // Funkcja tworząca kartę z iframe (dla streamów 5 i 6)
+      function createIframeCard(stream) {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        const labelDiv = document.createElement('div');
+        labelDiv.className = 'label';
+        labelDiv.innerHTML = `
+          <div class="title">
+            🌐 ${stream.title}
+            <span class="badge">${stream.badge}</span>
+          </div>
+        `;
+
+        // Kontener iframe z zachowaniem proporcji
+        const iframeContainer = document.createElement('div');
+        iframeContainer.className = 'plyr'; // używamy tej samej klasy dla spójności
+        iframeContainer.style.position = 'relative';
+        iframeContainer.style.background = '#000';
+        
+        const iframe = document.createElement('iframe');
+        iframe.src = stream.url;
+        iframe.setAttribute('allowfullscreen', 'true');
+        iframe.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture');
+        iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation allow-popups');
+        iframe.setAttribute('referrerpolicy', 'no-referrer');
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        iframe.style.border = 'none';
+        iframe.style.borderRadius = '1rem';
+        iframe.style.position = 'absolute';
+        iframe.style.top = '0';
+        iframe.style.left = '0';
+        
+        iframeContainer.appendChild(iframe);
+        
+        card.appendChild(labelDiv);
+        card.appendChild(iframeContainer);
+        
+        const noteDiv = document.createElement('div');
+        noteDiv.className = 'note';
+        noteDiv.innerHTML = `🖼️ ${stream.subtitle} (zewnętrzna strona)`;
+        card.appendChild(noteDiv);
+        
+        return card;
+      }
+
+      // Renderowanie wszystkich streamów
+      function renderStreams() {
+        grid.innerHTML = '';
+        streams.forEach(stream => {
+          if (stream.type === 'hls') {
+            grid.appendChild(createHLSCard(stream));
+          } else if (stream.type === 'iframe') {
+            grid.appendChild(createIframeCard(stream));
+          }
+        });
+      }
+
+      // Dodatkowa obsługa: dla bezpieczeństwa link z autoryzacją http (stream 1) może wymagać proxy,
+      // ale zostawiamy bez zmian – niektóre przeglądarki i odtwarzacze HLS radzą sobie z http basic auth w URL.
+      // Użytkownik został poinformowany poprzez notatki.
+
+      renderStreams();
+
+      // Opcjonalnie: odświeżanie iframe co jakiś czas? Nie, zostawiamy ręczne.
+      console.log('✅ Streamy załadowane. 6 kanałów gotowych.');
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clappr HLS Player</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+        }
+        #player {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="player"></div>
+
+    <!-- Clappr + HLS.js plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@clappr/hlsjs-playback@latest/dist/hlsjs-playback.min.js"></script>
+
+    <script>
+        // === TUTAJ WPISZ SWÓJ LINK M3U8 ===
+        const M3U8_URL = 'https://streamer.filmowo.xyz/memfs/a6daf60f-e288-43f4-a6a8-e8e14dd27e13.m3u8';
+        // =====================================
+
+        const player = new Clappr.Player({
+            source: M3U8_URL,
+            parentId: '#player',
+            width: '100%',
+            height: '100%',
+            autoPlay: true,
+            mute: false,
+            playback: {
+                hlsjsConfig: {
+                    enableWorker: true,
+                    lowLatencyMode: true
+                }
+            },
+            events: {
+                onReady: () => {
+                    console.log('Player gotowy');
+                },
+                onError: (err) => {
+                    console.error('Błąd odtwarzania:', err);
+                }
+            }
+        });
+
+        // Pełny ekran po kliknięciu (dla mobile)
+        document.getElementById('player').addEventListener('click', () => {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>DRM Player</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/shaka-player@latest/dist/shaka-player.compiled.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/shaka-player@latest/dist/shaka-player.ui.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shaka-player@latest/dist/controls.css" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+        }
+        #player {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: #000;
+        }
+        video {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Missing Keys Overlay */
+        #missingKeysOverlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(16, 16, 18, 0.92);
+            backdrop-filter: blur(6px);
+            padding: 16px 18px 18px 18px;
+            border-radius: 12px;
+            width: 440px;
+            max-height: 520px;
+            overflow: hidden;
+            color: #fff;
+            font-size: 13px;
+            z-index: 9999;
+            display: none;
+            cursor: default;
+            border: 1px solid #2a2a2a;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.7);
+        }
+        #missingKeysTitle {
+            font-weight: 600;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 6px;
+            padding-right: 28px;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+            color: #eee;
+            cursor: move;
+        }
+        #missingKeysClose {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            border: none;
+            background: transparent;
+            color: #888;
+            font-size: 20px;
+            line-height: 1;
+            cursor: pointer;
+            padding: 0 4px;
+            transition: color 0.2s;
+        }
+        #missingKeysClose:hover {
+            color: #fff;
+        }
+        #missingKeysTabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .missing-tab {
+            flex: 1;
+            font-size: 12px;
+            padding: 5px 8px;
+            border-radius: 6px;
+            border: 1px solid #555;
+            background: #1a1a1a;
+            color: #aaa;
+            cursor: pointer;
+            text-align: center;
+            user-select: none;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .missing-tab.active {
+            background: #0d6efd;
+            border-color: #0d6efd;
+            color: #fff;
+        }
+        .missing-tab:hover:not(.active) {
+            background: #2a2a2a;
+            border-color: #777;
+        }
+        #missingKeysListVideo,
+        #missingKeysListAudio {
+            max-height: 380px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #444 transparent;
+        }
+        #missingKeysListVideo::-webkit-scrollbar,
+        #missingKeysListAudio::-webkit-scrollbar {
+            width: 4px;
+        }
+        #missingKeysListVideo::-webkit-scrollbar-thumb,
+        #missingKeysListAudio::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 8px;
+        }
+        #missingKeysListVideo code,
+        #missingKeysListAudio code {
+            color: #ddd;
+            background: rgba(255,255,255,0.06);
+            padding: 0 4px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+        .pipe-sep {
+            color: #555;
+            font-weight: bold;
+            padding: 0 4px;
+        }
+        .track-row {
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+        .track-row .status-icon {
+            width: 18px;
+            text-align: center;
+        }
+        .track-row .kid-code {
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 12px;
+            background: rgba(255,255,255,0.05);
+            padding: 1px 6px;
+            border-radius: 4px;
+            color: #ccc;
+        }
+        .track-row .label-text {
+            color: #aaa;
+            font-size: 12px;
+        }
+        .track-row .bitrate-text {
+            color: #666;
+            font-size: 11px;
+            margin-left: auto;
+        }
+
+        @media (max-width: 600px) {
+            #missingKeysOverlay {
+                width: 90%;
+                max-width: 360px;
+                left: 5%;
+                top: 10px;
+                padding: 12px 14px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="player">
+    <div id="missingKeysOverlay">
+        <button id="missingKeysClose" type="button">&times;</button>
+        <div id="missingKeysTitle">🔑 Missing Keys</div>
+
+        <div id="missingKeysTabs">
+            <div id="tabVideo" class="missing-tab active">Video Tracks</div>
+            <div id="tabAudio" class="missing-tab">Audio Tracks</div>
+        </div>
+
+        <div id="missingKeysListVideo"></div>
+        <div id="missingKeysListAudio" style="display:none;"></div>
+    </div>
+
+    <video id="video" autoplay crossorigin="anonymous"></video>
+</div>
+
+<script>
+    // ============================================
+    // KONFIGURACJA NA SZTYWNO
+    // ============================================
+    const MANIFEST_URL = 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/00520057-16eb-46c0-a71a-b247a161e4ea/LIBCODER_SMOOTH_1080_WYO/9ba4da51-47a8-41aa-a2c7-5a8c16c61248/Manifest.ism';
+    const CLEAR_KEYS = {
+        '2941fed597af4f97b9c4ac4aa1ebfb3e': '21d6c76b9e9a60d05dfdc0eb361058e0'
+    };
+    // ============================================
+
+    let player = null;
+    let uiOverlay = null;
+    let activeMissingTab = "video";
+
+    function parseClearKeys(obj) {
+        return obj;
+    }
+
+    function buildTrackRows() {
+        if (!player) return [];
+        const manifest = player.getManifest ? player.getManifest() : null;
+        const keyStatuses = player.getKeyStatuses ? player.getKeyStatuses() : {};
+        const statusKids = Object.keys(keyStatuses);
+        const clearKeysMap = CLEAR_KEYS;
+        const configuredKids = Object.keys(clearKeysMap);
+        const rowsMap = new Map();
+
+        if (!manifest || !manifest.variants) return [];
+
+        manifest.variants.forEach(variant => {
+            const v = variant.video;
+            const a = variant.audio;
+
+            if (v) {
+                const height = v.height || 0;
+                const fpsRaw = v.frameRate || 0;
+                const fps = fpsRaw ? Math.round(fpsRaw) : 0;
+                const vbps = v.bandwidth
+                    ? Math.round(v.bandwidth / 1000)
+                    : (variant.bandwidth ? Math.round(variant.bandwidth / 1000) : 0);
+                let kids = [];
+                if (v.keyIds && v.keyIds.size > 0) {
+                    kids = Array.from(v.keyIds);
+                }
+                if (!kids.length && statusKids.length > 0) {
+                    kids = [statusKids[0]];
+                }
+                if (!kids.length && configuredKids.length === 1) {
+                    kids = [configuredKids[0]];
+                }
+                if (!kids.length) {
+                    kids = ["unknown"];
+                }
+                kids.forEach(kid => {
+                    const label = height
+                        ? height + "p" + (fps ? " @" + fps + "fps" : "")
+                        : "video" + (fps ? " " + fps + "fps" : "");
+                    const key = "video|" + kid + "|" + label;
+                    const existing = rowsMap.get(key);
+                    if (!existing || vbps > existing.bitrate) {
+                        rowsMap.set(key, {
+                            kid: kid,
+                            label: label,
+                            bitrate: vbps,
+                            kind: "video"
+                        });
+                    }
+                });
+            }
+
+            if (a) {
+                const sample = parseInt(a.audioSamplingRate || a.audioSamplingRate_ || 0, 10) || 0;
+                const channels = a.channelsCount || a.channels || 0;
+                const parts = [];
+                parts.push("audio");
+                if (channels) parts.push(channels + "ch");
+                if (sample) parts.push((sample / 1000).toFixed(1) + "kHz");
+                const label = parts.join(" ");
+                const abps = a.bandwidth
+                    ? Math.round(a.bandwidth / 1000)
+                    : (variant.bandwidth ? Math.round(variant.bandwidth / 1000) : 0);
+                let kidsA = [];
+                if (a.keyIds && a.keyIds.size > 0) {
+                    kidsA = Array.from(a.keyIds);
+                }
+                if (!kidsA.length && statusKids.length > 0) {
+                    kidsA = [statusKids[0]];
+                }
+                if (!kidsA.length && configuredKids.length === 1) {
+                    kidsA = [configuredKids[0]];
+                }
+                if (!kidsA.length) {
+                    kidsA = ["unknown"];
+                }
+                kidsA.forEach(kid => {
+                    const key = "audio|" + kid + "|" + label;
+                    const existing = rowsMap.get(key);
+                    if (!existing || abps > existing.bitrate) {
+                        rowsMap.set(key, {
+                            kid: kid,
+                            label: label,
+                            bitrate: abps,
+                            kind: "audio"
+                        });
+                    }
+                });
+            }
+        });
+        return Array.from(rowsMap.values());
+    }
+
+    function updateMissingKeysOverlay() {
+        const overlay = document.getElementById("missingKeysOverlay");
+        const listVideo = document.getElementById("missingKeysListVideo");
+        const listAudio = document.getElementById("missingKeysListAudio");
+
+        if (!player) {
+            overlay.style.display = "none";
+            return;
+        }
+
+        const clearKeysMap = CLEAR_KEYS;
+        const rows = buildTrackRows();
+        const videoRows = rows.filter(r => r.kind === "video");
+        const audioRows = rows.filter(r => r.kind === "audio");
+
+        if (!videoRows.length && !audioRows.length) {
+            overlay.style.display = "none";
+            return;
+        }
+
+        overlay.style.display = "block";
+        listVideo.innerHTML = "";
+        listAudio.innerHTML = "";
+
+        videoRows.sort((a, b) => b.bitrate - a.bitrate);
+        audioRows.sort((a, b) => b.bitrate - a.bitrate);
+
+        function renderRows(rowsArr, target) {
+            rowsArr.forEach(row => {
+                const haveKey = row.kid !== "unknown" && !!clearKeysMap[row.kid];
+                const div = document.createElement("div");
+                div.className = "track-row";
+                div.style.color = haveKey ? "#8f8" : "#f77";
+
+                const bitrateLabel = row.bitrate ? row.bitrate + " kbps" : "? kbps";
+                div.innerHTML =
+                    '<span class="status-icon">' + (haveKey ? "✔" : "✖") + '</span>' +
+                    '<span class="pipe-sep">|</span>' +
+                    '<span class="kid-code">' + row.kid + '</span>' +
+                    '<span class="pipe-sep">|</span>' +
+                    '<span class="label-text">' + row.label + '</span>' +
+                    '<span class="bitrate-text">' + bitrateLabel + '</span>';
+                target.appendChild(div);
+            });
+        }
+
+        renderRows(videoRows, listVideo);
+        renderRows(audioRows, listAudio);
+
+        if (activeMissingTab === "video") {
+            listVideo.style.display = "block";
+            listAudio.style.display = "none";
+        } else {
+            listVideo.style.display = "none";
+            listAudio.style.display = "block";
+        }
+    }
+
+    function forceHighestQuality() {
+        if (!player) return;
+        const variants = player.getVariantTracks ? player.getVariantTracks() : [];
+        if (!variants.length) return;
+        const best = variants.slice().sort((a, b) => b.bandwidth - a.bandwidth)[0];
+        player.configure({ abr: { enabled: false } });
+        player.selectVariantTrack(best, true);
+    }
+
+    async function initPlayer() {
+        const video = document.getElementById("video");
+        const container = document.getElementById("player");
+
+        if (!shaka.Player.isBrowserSupported()) {
+            alert("Shaka: browser not supported");
+            return;
+        }
+
+        shaka.polyfill.installAll();
+
+        if (player) {
+            try { await player.destroy(); } catch (e) {}
+            player = null;
+            uiOverlay = null;
+        }
+
+        player = new shaka.Player(video);
+        uiOverlay = new shaka.ui.Overlay(player, container, video);
+
+        player.addEventListener("error", e => {
+            console.error("Shaka error", e.detail);
+            updateMissingKeysOverlay();
+        });
+
+        player.configure({
+            drm: {
+                clearKeys: CLEAR_KEYS
+            },
+            streaming: {
+                rebufferingGoal: 2,
+                bufferBehind: 30,
+            }
+        });
+
+        try {
+            await player.load(MANIFEST_URL);
+        } catch (e) {
+            console.error("Load error:", e);
+            alert("Failed to load manifest: " + (e.message || e));
+            return;
+        }
+
+        // Force highest quality
+        forceHighestQuality();
+
+        updateMissingKeysOverlay();
+
+        player.addEventListener("adaptation", () => {
+            updateMissingKeysOverlay();
+        });
+
+        video.play().catch(err => {
+            console.warn("video.play() blocked:", err);
+        });
+    }
+
+    // --- UI Helpers ---
+
+    function initDraggableOverlay() {
+        const overlay = document.getElementById("missingKeysOverlay");
+        const header = document.getElementById("missingKeysTitle");
+        let isDown = false;
+        let offsetX = 0;
+        let offsetY = 0;
+
+        header.addEventListener("mousedown", e => {
+            isDown = true;
+            offsetX = e.clientX - overlay.offsetLeft;
+            offsetY = e.clientY - overlay.offsetTop;
+            overlay.style.cursor = "grabbing";
+            document.body.style.userSelect = "none";
+        });
+
+        document.addEventListener("mouseup", () => {
+            isDown = false;
+            overlay.style.cursor = "default";
+            document.body.style.userSelect = "";
+        });
+
+        document.addEventListener("mousemove", e => {
+            if (!isDown) return;
+            overlay.style.left = e.clientX - offsetX + "px";
+            overlay.style.top = e.clientY - offsetY + "px";
+        });
+    }
+
+    function initMissingTabs() {
+        const tabVideo = document.getElementById("tabVideo");
+        const tabAudio = document.getElementById("tabAudio");
+
+        tabVideo.addEventListener("click", () => {
+            activeMissingTab = "video";
+            tabVideo.classList.add("active");
+            tabAudio.classList.remove("active");
+            updateMissingKeysOverlay();
+        });
+
+        tabAudio.addEventListener("click", () => {
+            activeMissingTab = "audio";
+            tabAudio.classList.add("active");
+            tabVideo.classList.remove("active");
+            updateMissingKeysOverlay();
+        });
+    }
+
+    function initMissingClose() {
+        const closeBtn = document.getElementById("missingKeysClose");
+        closeBtn.addEventListener("click", () => {
+            document.getElementById("missingKeysOverlay").style.display = "none";
+        });
+    }
+
+    // --- Start ---
+
+    document.addEventListener("DOMContentLoaded", () => {
+        initDraggableOverlay();
+        initMissingTabs();
+        initMissingClose();
+
+        // Auto-start
+        initPlayer().catch(err => console.error(err));
+    });
+</script>
+
+</body>
+</html>

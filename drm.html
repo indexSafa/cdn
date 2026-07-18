@@ -35,70 +35,18 @@
 </head>
 <body>
 
-
-<div id="episodeSelector" style="position:absolute; top:14px; left:50%; transform:translateX(-50%); z-index:10000; background:rgba(16,16,18,0.92); padding:10px 16px; border-radius:10px; display:flex; gap:8px; flex-wrap:wrap; justify-content:center; max-width:90%; border:1px solid #2a2a2a; box-shadow:0 8px 30px rgba(0,0,0,0.7);">
-    <span style="color:#ccc; font-size:12px; align-self:center; white-space:nowrap;">Wybierz odcinek:</span>
-</div>
-<script>
-    // ============================================
-    // KONFIGURACJA NA SZTYWNO
-    // ============================================
-const EPISODES = [{'ep': 'E01', 'title': 'E01 POLSKA VS KLATWA RX7! (QUAD ROTOR!) po 4 latach - 3 mazdy RX7 w jednym materiale!', 'manifest': 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/38265f4a-e9ec-4bec-aad8-c169d88a43a8/LIBCODER_SMOOTH_1080_WYO/2d566d77-d0c8-49f2-b578-f287ab5e966b/Manifest.ism', 'key': '4aaf775075bd40a9969d9ee247363dc2:a45d6700d26072ded56b8ac3e3c0f7e4'}, {'ep': 'E02', 'title': 'E02 O TYM JAK PO ARESZCIE WYJECHALISMY DO USA... Nowa stara Toyota Supra i pierwsze kroki w USA (rozgrzewka)', 'manifest': 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/090a010f-40db-4882-8739-18f7d5939ada/LIBCODER_SMOOTH_1080_WYO/dd979972-9271-4283-9909-43dc38bf9b8e/Manifest.ism', 'key': '3349572ff76b45f7bb401002a77ee98d:d969cef915dc373c3389e4f041b5eb84'}, {'ep': 'E03', 'title': 'E03 Kupilem Lamborghini Huracan Twin Turbo i zasadniczo od razu je zepsulem... Pozniej naprawilem i pojechalem na DRAG RACE w USA.', 'manifest': 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/a0818273-0cb9-44ea-bfe4-c96db1a85e6f/LIBCODER_SMOOTH_1080_WYO/8f2d8d72-2798-41f3-8881-8b48b57ab95c/Manifest.ism', 'key': '1b10e271233947309a4dbf9586e5e6e9:f006bb6961d29638e8afb95625cf6476'}, {'ep': 'E04', 'title': "E04 Poznajcie nasz dom w USA... I garaz ktory w srodku od dawna trzyma THE NUKE'a! LA TRIP z samochodami z F&F!", 'manifest': 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/d8951e2d-06ab-4f7d-aa69-2bcd4574c933/LIBCODER_SMOOTH_1080_WYO/531259d0-62e3-4cf1-ab53-df133ac280f3/Manifest.ism', 'key': 'bf2845e79ce84896a2d0d5b355be3bca:6e23c5e4730ff038e946a5583525cf41'}, {'ep': 'E05', 'title': 'E05 NUKE na legendarne DRIFT MANSION - Czyli dom z torem zamiast ogrodu! Chicago kasacja McLarena i spadajacy smiglowiec na plazy (w jednym filmie)', 'manifest': 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/6348ddc7-31a6-406e-942d-d881b91cbc88/LIBCODER_SMOOTH_1080_WYO/39afeaab-6aca-44e3-8cd9-ae3b74aa2991/Manifest.ism', 'key': 'e3c87ebaada543fc91085d27d4a5813a:639a73334a996ab56b396b4c1412ed88'}, {'ep': 'E06', 'title': 'E06 W ZYCIU NIE NAGRALEM ANI NIE WIDZIALEM TAKIEGO MATERIALU... LAS VEGAS BEZ JAKIEJKOLWIEK CENZURY... Militaria i inne tego typu', 'manifest': 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/498d5ba9-62ce-4c93-b4a9-b2d24277d8d5/LIBCODER_SMOOTH_1080_WYO/da5db16e-8905-4459-ab9b-6a131475b937/Manifest.ism', 'key': '035b14192cdc42a89e9e5aac12c0a1a6:00fc523dcff17c9756f5bfb9a46b1227'}, {'ep': 'E07', 'title': 'E07 W RUMUNII JEZDZILISMY Z KOZA W TWIN TURBO, A W USA SKONCZYLEM W ARESZCIE (to NIE jest fikcyjny tytul)', 'manifest': 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/2c7576d2-7508-47ad-b41d-bfdb9f13c006/LIBCODER_SMOOTH_1080_WYO/c8d29e09-e640-402a-82a9-4e76faabdf73/Manifest.ism', 'key': '4a2bf85d7b304b178e4c8e48b6dfe87c:ced14c841fd78f8f8376813067e00618'}, {'ep': 'E08', 'title': 'E08 Poznajcie Nasza siedzibe platformy! Cala Budowa w jednym materiale! (TOUR + INNE HISTORIE)', 'manifest': 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/55b04991-1ba6-4d02-b063-02d143ba941e/LIBCODER_SMOOTH_1080_WYO/3b05165a-e78e-444d-b42b-611270b47988/Manifest.ism', 'key': 'b35c52739b1b4355a4f06375e8ed8427:dfa65a906c264ec86bb102d338ff5885'}, {'ep': 'E09', 'title': 'E09 Q&A 2025 - 10 pytan, 10 odpowiedzi.', 'manifest': 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/28e116db-69e4-4e6f-89de-620d5ce52cef/LIBCODER_SMOOTH_1080_WYO/2c95d65a-2e48-46df-b4d0-5ad02aeb6004/Manifest.ism', 'key': '35dd05404a954902898a536b908d80b3:cb1bf2b6b81b6c0129cad59a4203134d'}, {'ep': 'E10', 'title': 'E10 SEMA 2025 i 10 tonowy, opancerzony czolg ktory tam kupilismy...', 'manifest': 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/ceccd550-09e1-44e8-83f9-5c211a8d786e/LIBCODER_SMOOTH_1080_WYO/6e4f4f5c-b717-43f2-bfea-4368d02cc2c7/Manifest.ism', 'key': 'c44d54926cf34fcb9d4c6e913bd134a8:757dd9536aaf7e38ad97e7ff106cb228'}, {'ep': 'E11', 'title': 'E11 Nowymi Maverickami po Afryce! Algieria PART 1-2', 'manifest': 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/f3bed55d-4527-433b-8eba-c1182008b35d/LIBCODER_SMOOTH_1080_WYO/912091a3-4596-4042-bf9c-f50081d4fe0c/Manifest.ism', 'key': '13c2e2464fe14445b0a9103a4d5838ea:96febe9735e238c1bb35bfd49bca130e'}, {'ep': 'E12', 'title': 'E12 AFRYKA - ALGIERIA po pustyni - PART 2-2', 'manifest': 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/2c9d6b67-77d1-4a55-9c43-fcbc7fc3148c/LIBCODER_SMOOTH_1080_WYO/7e7f3b6f-fc03-42f8-ae61-92ef8d887458/Manifest.ism', 'key': '0e0931f59dd6473eb1a8bc93b10908ae:4c590cfb93f957c29bbb736386a306e2'}, {'ep': 'E13', 'title': 'E13 Material specjalny  Szwedzkie zimowe przygody V8 vs Prad', 'manifest': 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/1b0463c7-f1eb-40ad-8665-98b278b1005f/LIBCODER_SMOOTH_1080_WYO/7bcde650-5423-4574-a283-8802ad4a41c2/Manifest.ism', 'key': '96e5db83b4e64427b83a64186e651b16:329df57b6b5cba7b869507f5f8b6b9c5'}, {'ep': 'E14', 'title': 'E14 Miliarderzy w St Moritz vs grupa nieodpowiedzialnych chlopa z Polski', 'manifest': 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/7547d207-7354-4c06-9c53-01f7e5895a9f/LIBCODER_SMOOTH_1080_WYO/bbd6f120-af92-431e-a65a-c7fd7d18f23f/Manifest.ism', 'key': '080ed4ff500744c3beb50c474e183d35:8d752155fdc2eea70ef307894a1ed889'}, {'ep': 'E15', 'title': 'E15 SUPRA TARGA V2 TARGA! Druga na Swiecie supra bez dachu!', 'manifest': 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/3b923591-e156-466c-9ba4-d787ef9c1961/LIBCODER_SMOOTH_1080_WYO/cc8639c6-0c5f-494d-9a24-916e12119c30/Manifest.ism', 'key': '2c18451ac8494306a8ed26f60a34b013:400c805deaa5d1f194cdfef20f4abb40'}, {'ep': 'E16', 'title': 'E16 Witamy 911 GT3RS w pakiecie MR! Polska, Wlochy, Niemcy - w jednym filmie!', 'manifest': 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/f729becf-c48c-450a-92a6-ac7f5fb731af/LIBCODER_SMOOTH_1080_WYO/5c8af582-a326-403f-870d-f15813ce48a4/Manifest.ism', 'key': '30d440e484a9491ebdbf854a9f9cea16:15179abdb1945aae7270b4bcdc96e1e4'}, {'ep': 'E17', 'title': 'E17 NURBURGRING - Pierwsze starcie | GT3rs MR na Nordshlife', 'manifest': 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/1aa12c50-779f-4a6d-a0a0-eeb870d46426/LIBCODER_SMOOTH_1080_WYO/be635835-cbc6-4261-b517-95aad77b89e7/Manifest.ism', 'key': '48cbbe56b81742fb8dafcfd091e2c694:ac577fccf02f9c1547b3dd4906ca2a9b'}, {'ep': 'E18', 'title': 'E18 QUAD ROTOR TURBO - FINAL BUDOWY!', 'manifest': 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/bc9fc73a-c51b-41ce-91d9-30325d6371b6/LIBCODER_SMOOTH_1080_WYO/c5484b49-1c07-4242-b79e-82706cda6c50/Manifest.ism', 'key': 'af1065465c994276ba4fb12b535bf014:11470ec86e1b467e19d555cb1178e32e'}, {'ep': 'E19', 'title': 'E19 HOT RODY za 3mln w USA? Najciekawsze auta tej kategorii! | BMW M4 Adro 800+ single turbo', 'manifest': 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/0ac8d574-48b7-4ab8-b58d-1aac0f26a584/LIBCODER_SMOOTH_1080_WYO/2329356f-9fcb-497f-aa07-2cc536d5ebea/Manifest.ism', 'key': 'ac7d3b688cda4eccb6722609b88af819:fe04d981e32983c3c4b1c1a86d603975'}, {'ep': 'E20', 'title': 'E20 DODGE VIPER ACR vs ROUTE 66! PART 1/2', 'manifest': 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/3ba482af-d909-40e2-99bb-39c1c9df188b/LIBCODER_SMOOTH_1080_WYO/a82a2f02-a25e-4cf8-a400-b0c61cffc833/Manifest.ism', 'key': '8dbb183ca1924060ad1943e6ca553665:e09a04613ff8a2516a7aee7d9112baf8'}, {'ep': 'E21', 'title': 'E21 VIPER ACR vs ROUTE 66! PART 2/2 - O kosmitach, kasynach i innych przygodach…', 'manifest': 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/1abbe197-60cb-4ee3-9e6c-ee2d056ec4b9/LIBCODER_SMOOTH_1080_WYO/45132a4f-8f27-4c2f-98c9-a94ea9417d49/Manifest.ism', 'key': '18dc151df4c445afaa39d6526e9da71c:13868a44b7d72088351d7285dbe1cb9c'}, {'ep': 'E22', 'title': 'E22 Porsche 911 MANTA GT1 - caly projekt', 'manifest': 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/00520057-16eb-46c0-a71a-b247a161e4ea/LIBCODER_SMOOTH_1080_WYO/9ba4da51-47a8-41aa-a2c7-5a8c16c61248/Manifest.ism', 'key': '2941fed597af4f97b9c4ac4aa1ebfb3e:21d6c76b9e9a60d05dfdc0eb361058e0'}];
-
-    // Dynamic config from EPISODES
-    let CURRENT_EPISODE = EPISODES[0];
-    function getManifestAndKeys(ep) {
-        const [kid, value] = ep.key.split(':');
-        return {
-            manifest: ep.manifest,
-            clearKeys: { [kid]: value }
-        };
-    }
-    let MANIFEST_URL = CURRENT_EPISODE.manifest;
-    let CLEAR_KEYS = (function() {
-        const [kid, value] = CURRENT_EPISODE.key.split(':');
-        return { [kid]: value };
-    })();
-</script>
-
-<script>
-    (function buildSelector() {
-        const container = document.getElementById('episodeSelector');
-        EPISODES.forEach((ep, idx) => {
-            const btn = document.createElement('button');
-            btn.textContent = ep.ep;
-            btn.style.cssText = 'font-size:11px; padding:4px 8px; border-radius:6px; border:1px solid #555; background:#1a1a1a; color:#aaa; cursor:pointer; transition:all .15s;';
-            btn.title = ep.title;
-            btn.addEventListener('click', () => {
-                CURRENT_EPISODE = EPISODES[idx];
-                loadEpisode(idx);
-                container.querySelectorAll('button').forEach(b => {
-                    b.style.background = '#1a1a1a';
-                    b.style.color = '#aaa';
-                    b.style.borderColor = '#555';
-                });
-                btn.style.background = '#0d6efd';
-                btn.style.color = '#fff';
-                btn.style.borderColor = '#0d6efd';
-            });
-            container.appendChild(btn);
-        });
-        // Mark first active
-        const firstBtn = container.querySelector('button');
-        if (firstBtn) {
-            firstBtn.style.background = '#0d6efd';
-            firstBtn.style.color = '#fff';
-            firstBtn.style.borderColor = '#0d6efd';
-        }
-    })();
-</script>
-
 <div id="player">
     <video id="video" autoplay crossorigin="anonymous"></video>
 </div>
 
 <script>
-
+    // ============================================
+    // KONFIGURACJA NA SZTYWNO
+    // ============================================
+    const MANIFEST_URL = 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/00520057-16eb-46c0-a71a-b247a161e4ea/LIBCODER_SMOOTH_1080_WYO/9ba4da51-47a8-41aa-a2c7-5a8c16c61248/Manifest.ism';
+    const CLEAR_KEYS = {
+        '2941fed597af4f97b9c4ac4aa1ebfb3e': '21d6c76b9e9a60d05dfdc0eb361058e0'
+    };
     // ============================================
 
     let player = null;
@@ -113,21 +61,6 @@ const EPISODES = [{'ep': 'E01', 'title': 'E01 POLSKA VS KLATWA RX7! (QUAD ROTOR!
         player.selectVariantTrack(best, true);
     }
 
-
-    function loadEpisode(idx) {
-        CURRENT_EPISODE = EPISODES[idx];
-        const cfg = getManifestAndKeys(CURRENT_EPISODE);
-        MANIFEST_URL = cfg.manifest;
-        CLEAR_KEYS = cfg.clearKeys;
-        if (player) {
-            player.configure({ drm: { clearKeys: CLEAR_KEYS } });
-            player.load(MANIFEST_URL).catch(err => {
-                console.error("Load error:", err);
-            });
-        } else {
-            initPlayer();
-        }
-    }
     async function initPlayer() {
         const video = document.getElementById("video");
         const container = document.getElementById("player");
@@ -163,7 +96,7 @@ const EPISODES = [{'ep': 'E01', 'title': 'E01 POLSKA VS KLATWA RX7! (QUAD ROTOR!
         });
 
         try {
-            await player.load(CURRENT_EPISODE.manifest);
+            await player.load(MANIFEST_URL);
         } catch (e) {
             console.error("Load error:", e);
             alert("Failed to load manifest: " + (e.message || e));

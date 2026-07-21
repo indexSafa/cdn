@@ -3,16 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Przeglądarka PNG - GitHub Pages</title>
+    <title>Przeglądarka PNG</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #121212; color: #fff; padding: 20px; margin: 0; }
-        h1 { text-align: center; }
+        body { 
+            font-family: Arial, sans-serif; 
+            background-color: #121212; 
+            color: #fff; 
+            padding: 20px; 
+            margin: 0; 
+        }
+        h1 { 
+            text-align: center; 
+        }
         
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 15px;
             padding: 20px 0;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         
         .card {
@@ -21,9 +31,15 @@
             border-radius: 8px;
             padding: 10px;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             transition: transform 0.2s, border-color 0.2s;
         }
-        .card:hover { transform: translateY(-3px); border-color: #007acc; }
+        .card:hover { 
+            transform: translateY(-3px); 
+            border-color: #007acc; 
+        }
         
         .card img {
             width: 100%;
@@ -32,13 +48,35 @@
             border-radius: 4px;
             cursor: pointer;
             background-color: #1a1a1a;
+            margin-bottom: 10px;
         }
 
         .card p {
-            margin: 8px 0 0 0;
+            margin: 0 0 10px 0;
             font-size: 13px;
             word-break: break-word;
             color: #ccc;
+            flex-grow: 1; /* Pozwala wyrównać przyciski do dołu */
+        }
+
+        /* Przycisk kopiowania */
+        .copy-btn {
+            background-color: #007acc;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+            width: 100%;
+        }
+        .copy-btn:hover {
+            background-color: #005f99;
+        }
+        .copy-btn.copied {
+            background-color: #28a745; /* Zielony kolor po skopiowaniu */
         }
 
         /* Fullscreen Modal */
@@ -51,7 +89,11 @@
             align-items: center;
             z-index: 1000;
         }
-        .modal img { max-width: 90%; max-height: 90%; border-radius: 6px; }
+        .modal img { 
+            max-width: 90%; 
+            max-height: 90%; 
+            border-radius: 6px; 
+        }
     </style>
 </head>
 <body>
@@ -59,15 +101,17 @@
     <h1>Galeria plików PNG</h1>
     <div class="gallery" id="gallery">Pobieranie plików...</div>
 
+    <!-- Modal podglądu -->
     <div class="modal" id="modal" onclick="closeModal()">
         <img id="modal-img" src="" alt="Podgląd">
     </div>
 
     <script>
         // === USTAWIENIA ===
-        const username = 'indexSafa'; // Np. 'jan-kowalski'
-        const repo = 'cdn';         // Np. 'moje-zdjecia'
-        const folderPath = 'media/img';                      // Zostaw pusty '' dla głównego katalogu, lub wpisz np. 'images' jeśli pliki są w podfolderze
+        const username = 'indexSafa'; // Twoja nazwa użytkownika
+        const repo = 'cdn';           // Twoje repozytorium
+        const folderPath = 'media/img'; // Ścieżka do folderu z grafikami
+        const customBaseUrl = 'https://cdn.szafqu.us/media/img/'; // Twoja własna domena
 
         // Endpoint GitHub API
         const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/${folderPath}`;
@@ -76,15 +120,15 @@
             const gallery = document.getElementById('gallery');
             try {
                 const response = await fetch(apiUrl);
-                if (!response.ok) throw new Error('Nie udało się pobrać listy plików.');
+                if (!response.ok) throw new Error('Nie udało się pobrać listy plików. Sprawdź, czy repozytorium jest publiczne.');
 
                 const files = await response.json();
                 
-                // Filtrujemy tylko pliki z rozszerzeniem .png
+                // Filtrujemy tylko pliki z rozszerzeniem .png (ignorując wielkość liter)
                 const pngFiles = files.filter(file => file.name.toLowerCase().endsWith('.png'));
 
                 if (pngFiles.length === 0) {
-                    gallery.innerHTML = '<p>Brak plików PNG w tym folderze.</p>';
+                    gallery.innerHTML = '<p style="text-align:center; grid-column: 1 / -1;">Brak plików PNG w tym folderze.</p>';
                     return;
                 }
 
@@ -94,19 +138,50 @@
                     const card = document.createElement('div');
                     card.className = 'card';
 
-                    // Używamy `download_url` bezpośrednio z surowych zasobów GitHub
+                    // Tworzymy link korzystając z Twojej domeny
+                    const customUrl = `${customBaseUrl}${encodeURIComponent(file.name)}`;
+
+                    // Generujemy zawartość kafelka z obrazkiem, tytułem i przyciskiem
                     card.innerHTML = `
-                        <img src="${file.download_url}" alt="${file.name}" onclick="openModal('${file.download_url}')">
+                        <img src="${customUrl}" alt="${file.name}" onclick="openModal('${customUrl}')" title="Kliknij, aby powiększyć">
                         <p>${file.name}</p>
+                        <button class="copy-btn" onclick="copyLink('${customUrl}', this)">Kopiuj link</button>
                     `;
                     gallery.appendChild(card);
                 });
 
             } catch (error) {
-                gallery.innerHTML = `<p style="color: red;">Błąd: ${error.message}</p>`;
+                gallery.innerHTML = `<p style="color: #ff4444; text-align:center; grid-column: 1 / -1;">Błąd: ${error.message}</p>`;
             }
         }
 
+        // Funkcja kopiująca link do schowka
+        function copyLink(url, btnElement) {
+            // Tworzymy tymczasowy, ukryty element input
+            const tempInput = document.createElement('input');
+            tempInput.value = url;
+            document.body.appendChild(tempInput);
+            
+            // Zaznaczamy i kopiujemy tekst
+            tempInput.select();
+            document.execCommand('copy');
+            
+            // Usuwamy tymczasowy element
+            document.body.removeChild(tempInput);
+
+            // Zmiana wyglądu przycisku na "Skopiowano!"
+            const originalText = btnElement.innerText;
+            btnElement.innerText = 'Skopiowano!';
+            btnElement.classList.add('copied');
+
+            // Przywrócenie oryginalnego wyglądu przycisku po 2 sekundach
+            setTimeout(() => {
+                btnElement.innerText = originalText;
+                btnElement.classList.remove('copied');
+            }, 2000);
+        }
+
+        // Funkcje do obsługi pełnoekranowego podglądu (Modalu)
         function openModal(src) {
             document.getElementById('modal-img').src = src;
             document.getElementById('modal').style.display = 'flex';

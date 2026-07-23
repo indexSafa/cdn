@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>DRM Player</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/shaka-player@latest/dist/shaka-player.compiled.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/shaka-player@latest/dist/shaka-player.ui.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shaka-player@latest/dist/controls.css" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+        }
+        #player {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: #000;
+        }
+        video {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div id="player">
+    <video id="video" autoplay crossorigin="anonymous"></video>
+</div>
+
+<script>
+    // ============================================
+    // KONFIGURACJA NA SZTYWNO
+    // ============================================
+    const MANIFEST_URL = 'https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/00520057-16eb-46c0-a71a-b247a161e4ea/LIBCODER_SMOOTH_1080_WYO/9ba4da51-47a8-41aa-a2c7-5a8c16c61248/Manifest.ism';
+    const CLEAR_KEYS = {
+        '2941fed597af4f97b9c4ac4aa1ebfb3e': '21d6c76b9e9a60d05dfdc0eb361058e0'
+    };
+    // ============================================
+
+    let player = null;
+    let uiOverlay = null;
+
+    function forceHighestQuality() {
+        if (!player) return;
+        const variants = player.getVariantTracks ? player.getVariantTracks() : [];
+        if (!variants.length) return;
+        const best = variants.slice().sort((a, b) => b.bandwidth - a.bandwidth)[0];
+        player.configure({ abr: { enabled: false } });
+        player.selectVariantTrack(best, true);
+    }
+
+    async function initPlayer() {
+        const video = document.getElementById("video");
+        const container = document.getElementById("player");
+
+        if (!shaka.Player.isBrowserSupported()) {
+            alert("Shaka: browser not supported");
+            return;
+        }
+
+        shaka.polyfill.installAll();
+
+        if (player) {
+            try { await player.destroy(); } catch (e) {}
+            player = null;
+            uiOverlay = null;
+        }
+
+        player = new shaka.Player(video);
+        uiOverlay = new shaka.ui.Overlay(player, container, video);
+
+        player.addEventListener("error", e => {
+            console.error("Shaka error", e.detail);
+        });
+
+        player.configure({
+            drm: {
+                clearKeys: CLEAR_KEYS
+            },
+            streaming: {
+                rebufferingGoal: 2,
+                bufferBehind: 30,
+            }
+        });
+
+        try {
+            await player.load(MANIFEST_URL);
+        } catch (e) {
+            console.error("Load error:", e);
+            alert("Failed to load manifest: " + (e.message || e));
+            return;
+        }
+
+        // Force highest quality
+        forceHighestQuality();
+
+        video.play().catch(err => {
+            console.warn("video.play() blocked:", err);
+        });
+    }
+
+    // Start player automatically
+    document.addEventListener("DOMContentLoaded", () => {
+        initPlayer().catch(err => console.error(err));
+    });
+</script>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clappr HLS Player</title>
+    <title>Clappr Player</title>
     <style>
         * {
             margin: 0;
@@ -30,12 +30,16 @@
     <script src="https://cdn.jsdelivr.net/npm/@clappr/hlsjs-playback@latest/dist/hlsjs-playback.min.js"></script>
 
     <script>
-        // === TUTAJ WPISZ SWÓJ LINK M3U8 ===
-        const M3U8_URL = 'https://streamer.filmowo.xyz/memfs/78b13962-94b7-47ae-ab72-694012af33a1.m3u8';
+        // === POBIERANIE LINKU Z URL ===
+        // Sprawdza parametry w pasku adresu
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // Pobiera link z parametru ?url= lub używa domyślnego, jeśli parametr nie istnieje
+        const VIDEO_URL = urlParams.get('url') || 'https://streamer.filmowo.xyz/memfs/78b13962-94b7-47ae-ab72-694012af33a1.m3u8';
         // =====================================
 
         const player = new Clappr.Player({
-            source: M3U8_URL,
+            source: VIDEO_URL,
             parentId: '#player',
             width: '100%',
             height: '100%',
@@ -49,7 +53,7 @@
             },
             events: {
                 onReady: () => {
-                    console.log('Player gotowy');
+                    console.log('Player gotowy. Odtwarzam:', VIDEO_URL);
                 },
                 onError: (err) => {
                     console.error('Błąd odtwarzania:', err);

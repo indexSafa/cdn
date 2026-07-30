@@ -45,7 +45,6 @@
 
         .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 14px; position: relative; }
         
-        /* Czerwone wyróżnienie dla złej jakości */
         .card.flagged {
             background: var(--danger-bg) !important;
             border: 2px solid var(--danger-border) !important;
@@ -83,7 +82,7 @@
     </header>
 
     <div class="input-panel">
-        <textarea id="bulk-input" placeholder="Wklej tutaj całą swoją listę w dowolnym formacie, np.:&#10;&#10;Kapitan Ameryka: Pierwsze starcie (2011)&#10;https://r.cdn-ncplus.pl/vod/store01/PRE_21023076/_/hd4-dashdrm02/PRE_21023076.mpd&#10;--key cb7cdd7580bb45608c7ff2da346ec1f4:ca71205feedd46686bc2cfdaf72da710 --key 703ea02b01a54e768ce885ba41bff20e:6acc5f74b9a293e544134065cf513f00&#10;&#10;Iron Man (2008)&#10;https://r.cdn-ncplus.pl/.../PRE_xxx.mpd&#10;--key ..."></textarea>
+        <textarea id="bulk-input" placeholder="Wklej tutaj całą swoją listę..."></textarea>
         
         <div class="controls">
             <span style="font-size: 12px; color: var(--text-secondary);">Kryterium flagi (Czerwone tło): <strong>Brak rozdzielczości >= 1080p</strong> LUB <strong>Audio poniżej DDP/AAC 6ch (5.1) lub < 192kbps</strong>.</span>
@@ -108,18 +107,14 @@ function parseBulkInput() {
     const grid = document.getElementById('cards-grid');
     grid.innerHTML = "";
 
-    // Dzielenie wpisów na bloki po pustych liniach lub po tytułach
-    const blocks = rawText.split(/
-\s*
-/);
+    const blocks = rawText.split(/\n\s*\n/);
     
     let total = 0;
     let okCount = 0;
     let badCount = 0;
 
     blocks.forEach((block, idx) => {
-        const lines = block.split('
-').map(l => l.trim()).filter(l => l);
+        const lines = block.split('\n').map(l => l.trim()).filter(l => l);
         if(lines.length === 0) return;
 
         total++;
@@ -139,19 +134,14 @@ function parseBulkInput() {
             }
         });
 
-        // Weryfikacja jakości (Symulacja / Analiza parametrów ze wzorca CNLP oraz MPD)
-        // Jeśli URL wskazuje na HD/1080p z Canal+ (DDP 5.1), ustawiamy flagę jakości
         const isHd4 = mpdUrl.includes('hd4') || mpdUrl.includes('1080') || mpdUrl.includes('_HD');
         
-        // Sztuczny test jakości pod kątem flagowania:
-        // Jeśli film zawiera w nazwie słowo "Brak" lub nie ma HD w MPD - flagujemy
         let maxRes = isHd4 ? "1920x1080" : "1280x720";
         let maxBitrate = isHd4 ? "4950 kbps" : "2400 kbps";
         let audioCodec = "E-AC3 (DDP5.1)";
         let audioBitrate = "384 kbps";
         let audioChannels = 6;
 
-        // Reguła sprawdzania czy film Leci na CZERWONO:
         let isFlagged = false;
         let flagReasons = [];
 
@@ -166,7 +156,6 @@ function parseBulkInput() {
 
         if(isFlagged) badCount++; else okCount++;
 
-        // Renderowanie Karty
         const card = document.createElement('div');
         card.className = `card ${isFlagged ? 'flagged' : ''}`;
         card.innerHTML = `

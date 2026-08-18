@@ -35,7 +35,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         
         // Pobiera link z parametru ?url= lub używa domyślnego, jeśli parametr nie istnieje
-        const VIDEO_URL = urlParams.get('url') || 'https://streamer.filmowo.xyz/memfs/78b13962-94b7-47ae-ab72-694012af33a1.m3u8';
+        const VIDEO_URL = urlParams.get('url') || '';
         // =====================================
 
         const player = new Clappr.Player({

@@ -26,7 +26,7 @@ const EPISODES = [
     "title": "GT1 MANTA / GT3RS x2 - Euro Trip, Austria PART 1/2",
     "description": "Witamy w materiale numer 1 na 2 - w którym to wybierzemy się na Road Trip do Austrii. Legendarna przełęcz Gloßglockner i event we współpracy z rodziną Porsche - na który poczuliśmy się wręcz zaproszeni… Ale nie był niczym interesującym. Początek przygody która zakończy się we Włoszech, dużo pięknych widoków i towarzystwo samych prosiaków… no z drobnym wyjątkiem.",
     "thumbnail": "https://r.dcs.redcdn.pl/scale/o2/wyo/csi/prod/upload/vod/6241161/images/14920770_1785490681557",
-    "urlmp4": "https://index.szafqu.us/szafqu/csi/E23%20GT1%20MANTA%20_%20GT3RS%20x2%20-%20Euro%20Trip%2C%20Austria%20PART%201_2.mp4",
+    "urlmp4": "https://index.szafqu.us/szafqu/csi/E23%20GT1%20MANTA%20_%20GT3RS%20x2%20-%20Euro%20Trip%2C%20Austria%20PART%201_2%201080p.CSI.WEB-DL.AAC.H264-SZAFQU.mp4",
     "urlism": "https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/f6faef80-c4c6-45a4-9f73-93729f2a4282/LIBCODER_SMOOTH_1080_WYO/4cc3b2c4-75c6-4614-a10f-5367368df4d0/Manifest.ism",
     "key": "56b26f9d07bf41c7a78634ab43fd9f91:fcd2018a97938fcc533b232f8eae31ab"
   },

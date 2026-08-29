@@ -1,5 +1,3 @@
-const BASE = "https://index.szafqu.us/szafqu/csi/";
-
 /**
  * Struktura odcinka:
  *   id, episode, title, description, thumbnail  — obowiązkowe

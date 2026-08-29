@@ -10,6 +10,16 @@ const BASE = "https://index.szafqu.us/szafqu/csi/";
  * Odcinki posortowane od najnowszego do najstarszego.
  */
 const EPISODES = [
+    {
+    "id": 25,
+    "episode": "E25",
+    "title": "",
+    "description": "",
+    "thumbnail": "",
+    "urlmp4": "",
+    "urlism": "",
+    "key": ""
+  },
   {
     "id": 24,
     "episode": "E24",

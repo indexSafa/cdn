@@ -16,7 +16,7 @@ const EPISODES = [
     "title": "Zawieśmy Supre w pionie na ścianie jak gdyby nigdy nic…",
     "description": "Materiał w 100% dookoła driftu i wydarzenia Speedland, na którym pojawiliśmy się cała ekipa i solidnym składem samochodów! Trening na Kielcach, inicjacja w okolicy 180km/h przy bandzie! W głównych rolach S15 Silvia. Prócz tego całe przygotowania i historie związane z imprezą Speedland!",
     "thumbnail": "https://r.dcs.redcdn.pl/scale/o2/wyo/csi/prod/upload/vod/6241193/images/14920914_1787991210335",
-    "urlmp4": "",
+    "urlmp4": "https://index.szafqu.us/szafqu/csi/E25%20Zawiesmy%20Supre%20w%20pionie%20na%20scianie%20jak%20gdyby%20nigdy%20nic%E2%80%A6%201080p.CSI.WEB-DL.AAC.H264-SZAFQU.mp4",
     "urlism": "https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/60a39499-2ad5-49aa-a138-4b88213753ca/LIBCODER_SMOOTH_1080_WYO/f564d0b5-de60-42f7-9227-fc23a9ea7b51/Manifest.ism",
     "key": "b984aa90a9894e6eb3ed31079a3b3b37:0b73849bb74aaa8185cc8d147210f465"
   },

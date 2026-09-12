@@ -8,7 +8,17 @@
  * Odcinki posortowane od najnowszego do najstarszego.
  */
 const EPISODES = [
-    {
+  {
+    "id": 26,
+    "episode": "E26",
+    "title": "GT3rs MANTHEY vs Matka natura! SPA / NÜRBURGRING i inne przygody",
+    "description": "Czasem jest tak, że plan mamy ambitny - ale okoliczności niezależne od nas mocno dają nam do zrozumienia, że nic z tego. Wynajęty tor, sportowe auto, torowe opony, chęć ustanowienia osobistego rekordu a na to niszczyciel wszystkich planów - deszcz. W tym materiale odwiedzimy Deszczowy Nürburgring, jeszcze bardziej deszczowe SPA w Belgii - a na koniec wysnujemy wnioski, że to jednak drift jest naszą dyscypliną.",
+    "thumbnail": "https://r.dcs.redcdn.pl/scale/o2/wyo/csi/prod/upload/vod/6241176/images/14920884_1789156585153",
+    "urlmp4": "",
+    "urlism": "https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/5e1f9a3f-d43d-4690-a46c-c80be16deefd/LIBCODER_SMOOTH_1080_WYO/7c849cc4-0776-4e1f-b5e3-c2cab4549e41/Manifest.ism",
+    "key": "d5be4b401e0e48b8bf09ac2a1f457ff4:c7492bf6e6b9baecb56efc3f159cc25b"
+  },
+  {
     "id": 25,
     "episode": "E25",
     "title": "Zawieśmy Supre w pionie na ścianie jak gdyby nigdy nic…",

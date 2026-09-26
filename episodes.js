@@ -10,6 +10,16 @@
 const EPISODES = [
   {
     "id": 26,
+    "episode": "E27",
+    "title": "SUPRA MK4 PO DACHOWANIU…",
+    "description": "Witamy serdecznie. Materiał to mix Zajawki na rowery zjazdowe, przygód z trzecim świecie znanym pod nazwą Macedonia Północna, oraz Supry MK4 w najmniej spotykanej specyfikacji- LHD, EU, MANUAL - ale po nie byle jakim dachowaniu. Uda się to uratować? A jeśli nie to, czy uda się odzyskać kwotę zakupu? Zapraszamy na film z szerokiej kategorii!",
+    "thumbnail": "https://r.dcs.redcdn.pl/scale/o2/wyo/csi/prod/upload/vod/6241225/images/14921041_1790361645049",
+    "urlmp4": "https://index.szafqu.us/szafqu/csi/E27%20SUPRA%20MK4%20PO%20DACHOWANIU%201080p.CSI.WEB-DL.AAC.H264-SZAFQU.mp4",
+    "urlism": "https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/a0430fe1-b601-439d-85cb-9425504badda/LIBCODER_SMOOTH_1080_WYO/1b4e3615-0965-44ab-8aa5-3dbdea227d16/Manifest.ism",
+    "key": "273bea440d8745af8df21366ac91d89b:6c9354e095c10416bfff5997d33d4ff7"
+  },
+  {
+    "id": 26,
     "episode": "E26",
     "title": "GT3rs MANTHEY vs Matka natura! SPA / NÜRBURGRING i inne przygody",
     "description": "Czasem jest tak, że plan mamy ambitny - ale okoliczności niezależne od nas mocno dają nam do zrozumienia, że nic z tego. Wynajęty tor, sportowe auto, torowe opony, chęć ustanowienia osobistego rekordu a na to niszczyciel wszystkich planów - deszcz. W tym materiale odwiedzimy Deszczowy Nürburgring, jeszcze bardziej deszczowe SPA w Belgii - a na koniec wysnujemy wnioski, że to jednak drift jest naszą dyscypliną.",

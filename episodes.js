@@ -8,6 +8,16 @@
  * Odcinki posortowane od najnowszego do najstarszego.
  */
 const EPISODES = [
+    {
+    "id": 28,
+    "episode": "E28",
+    "title": "1989 FORD F150 - start projektu!",
+    "description": "Koniec sezonu to start przerwy zimowej w której zwykle rodzą się najlepsze projekty… Tak też będzie w tym roku, ale zabieramy się za wóz, który na swoją kolej czekał blisko 5 lat. 1989 rok i Ford Puck Up F-150 w wersji z krótką i szeroką paką - to baza tego co planujemy. Szczegóły i to w co celujemy, znajdziecie w filmie. Zapowiada się ogrom pracy/ ale jeśli się uda to efekt będzie nie z tej planety. Zaczynamy.",
+    "thumbnail": "https://r.dcs.redcdn.pl/scale/o2/wyo/csi/prod/upload/vod/6241223/images/14921043_1791575891620",
+    "urlmp4": "https://admin:%24W2m%3Cnk(R8x7Tz%25m@index.szafqu.us/szafqu/csi/E28%201989%20FORD%20F150%20-%20start%20projektu!%201080p.CSI.WEB-DL.AAC.H264-SZAFQU.mp4",
+    "urlism": "https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/fd909f27-b7c3-46fa-8105-6c23bc6e8430/LIBCODER_SMOOTH_1080_WYO/a8966646-b211-4283-96c5-8897645a89fe/Manifest.ism",
+    "key": "49e7eab9c0524f3c813e43d1e1163665:245b593253c89798ef7076a6af4b8cb3"
+  },
   {
     "id": 27,
     "episode": "E27",

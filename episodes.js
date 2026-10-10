@@ -14,7 +14,7 @@ const EPISODES = [
     "title": "1989 FORD F150 - start projektu!",
     "description": "Koniec sezonu to start przerwy zimowej w której zwykle rodzą się najlepsze projekty… Tak też będzie w tym roku, ale zabieramy się za wóz, który na swoją kolej czekał blisko 5 lat. 1989 rok i Ford Puck Up F-150 w wersji z krótką i szeroką paką - to baza tego co planujemy. Szczegóły i to w co celujemy, znajdziecie w filmie. Zapowiada się ogrom pracy/ ale jeśli się uda to efekt będzie nie z tej planety. Zaczynamy.",
     "thumbnail": "https://r.dcs.redcdn.pl/scale/o2/wyo/csi/prod/upload/vod/6241223/images/14921043_1791575891620",
-    "urlmp4": "https://admin:%24W2m%3Cnk(R8x7Tz%25m@index.szafqu.us/szafqu/csi/E28%201989%20FORD%20F150%20-%20start%20projektu!%201080p.CSI.WEB-DL.AAC.H264-SZAFQU.mp4",
+    "urlmp4": "https://index.szafqu.us/szafqu/csi/E28%201989%20FORD%20F150%20-%20start%20projektu!%201080p.CSI.WEB-DL.AAC.H264-SZAFQU.mp4",
     "urlism": "https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/fd909f27-b7c3-46fa-8105-6c23bc6e8430/LIBCODER_SMOOTH_1080_WYO/a8966646-b211-4283-96c5-8897645a89fe/Manifest.ism",
     "key": "49e7eab9c0524f3c813e43d1e1163665:245b593253c89798ef7076a6af4b8cb3"
   },
@@ -24,7 +24,7 @@ const EPISODES = [
     "title": "SUPRA MK4 PO DACHOWANIU…",
     "description": "Witamy serdecznie. Materiał to mix Zajawki na rowery zjazdowe, przygód z trzecim świecie znanym pod nazwą Macedonia Północna, oraz Supry MK4 w najmniej spotykanej specyfikacji- LHD, EU, MANUAL - ale po nie byle jakim dachowaniu. Uda się to uratować? A jeśli nie to, czy uda się odzyskać kwotę zakupu? Zapraszamy na film z szerokiej kategorii!",
     "thumbnail": "https://r.dcs.redcdn.pl/scale/o2/wyo/csi/prod/upload/vod/6241225/images/14921041_1790361645049",
-    "urlmp4": "https://admin:%24W2m%3Cnk(R8x7Tz%25m@index.szafqu.us/szafqu/csi/E27%20SUPRA%20MK4%20PO%20DACHOWANIU%E2%80%A6%201080p.CSI.WEB-DL.AAC.H264-SZAFQU.mp4",
+    "urlmp4": "https://index.szafqu.us/szafqu/csi/E27%20SUPRA%20MK4%20PO%20DACHOWANIU%E2%80%A6%201080p.CSI.WEB-DL.AAC.H264-SZAFQU.mp4",
     "urlism": "https://r.dcs.redcdn.pl/dash/o2/wyo/csi/vod/a0430fe1-b601-439d-85cb-9425504badda/LIBCODER_SMOOTH_1080_WYO/1b4e3615-0965-44ab-8aa5-3dbdea227d16/Manifest.ism",
     "key": "273bea440d8745af8df21366ac91d89b:6c9354e095c10416bfff5997d33d4ff7"
   },
